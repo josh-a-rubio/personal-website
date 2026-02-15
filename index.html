@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- UPDATE: Change page title and add your name -->
+    <title>Your Name - Portfolio</title>
+    
+    <!-- Google Fonts - JetBrains Mono for authentic terminal look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =================================
+           COLOR VARIABLES - Ubuntu Theme
+           ================================= */
+        :root {
+            /* Ubuntu color scheme - modify these to change the entire theme */
+            --terminal-bg: #300a24;           /* Dark purple - main terminal background */
+            --terminal-ubuntu: #e95420;       /* Ubuntu orange - main accent color */
+            --terminal-ubuntu-dark: #5e2750;  /* Dark maroon - page background */
+            --terminal-ubuntu-light: #f47068; /* Light orange - highlights */
+            --terminal-brown: #3c2414;        /* Brown accent */
+            --terminal-gray: #4a4a4a;         /* UI borders */
+            --terminal-light-gray: #a8a8a8;  /* Secondary text */
+            --terminal-white: #ffffff;        /* Primary text */
+            --terminal-green: #4e9a06;        /* Success/tech tags */
+            --terminal-yellow: #edd400;       /* Warning/minimize button */
+            --terminal-red: #cc0000;          /* Error/close button */
+            --cursor-blink: 1s;               /* Cursor blink speed */
+        }
+
+        /* =================================
+           GLOBAL STYLES
+           ================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--terminal-ubuntu-dark); /* Page background color */
+            color: var(--terminal-white);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =================================
+           TERMINAL WINDOW STRUCTURE
+           ================================= */
+        .terminal-container {
+            max-width: 1200px; /* Adjust for wider/narrower layout */
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terminal-window {
+            border: 1px solid var(--terminal-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--terminal-bg); /* Terminal window background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Terminal header with close/minimize/maximize buttons */
+        .terminal-header {
+            background: var(--terminal-gray);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--terminal-light-gray);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        /* Window control buttons (close, minimize, maximize) */
+        .btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-close { 
+            background: var(--terminal-red);
+        }
+
+        .btn-close:hover {
+            box-shadow: 0 0 6px rgba(204, 0, 0, 0.4);
+        }
+
+        .btn-minimize { 
+            background: var(--terminal-yellow);
+        }
+
+        .btn-minimize:hover {
+            box-shadow: 0 0 6px rgba(237, 212, 0, 0.4);
+        }
+
+        .btn-maximize { 
+            background: var(--terminal-green);
+        }
+
+        .btn-maximize:hover {
+            box-shadow: 0 0 6px rgba(78, 154, 6, 0.4);
+        }
+
+        /* Terminal title bar text */
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--terminal-white);
+            margin-left: 1rem;
+        }
+
+        /* =================================
+           TERMINAL CONTENT AREA
+           ================================= */
+        .terminal-content {
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Command prompt styling (user@portfolio:~$) */
+        .prompt {
+            color: var(--terminal-ubuntu);
+            font-weight: 400;
+        }
+
+        /* Blinking cursor */
+        .cursor {
+            background: var(--terminal-white);
+            animation: blink var(--cursor-blink) infinite, pulse 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* =================================
+           TYPOGRAPHY
+           ================================= */
+        /* Main heading - your name */
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--terminal-white);
+            margin: 1rem 0 2rem 0;
+        }
+
+        /* Section headers (Projects, Contact) */
+        h2 {
+            color: var(--terminal-ubuntu-light);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            border-left: 3px solid var(--terminal-ubuntu);
+            padding-left: 0.75rem;
+        }
+
+        /* =================================
+           ANIMATION CLASSES
+           ================================= */
+        .section {
+            margin: 2rem 0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Command text styling */
+        .command {
+            color: var(--terminal-ubuntu-light);
+            font-weight: 400;
+        }
+
+        /* Command output indentation */
+        .output {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        /* =================================
+           SKILLS BADGES
+           UPDATE: Add/remove/modify skills in the JavaScript section (lines ~470-485)
+           ================================= */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(233, 84, 32, 0.15);
+            border: 1px solid var(--terminal-ubuntu);
+            border-radius: 3px;
+            color: var(--terminal-ubuntu-light);
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sliding highlight effect on hover */
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(233, 84, 32, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .badge:hover {
+            background: rgba(233, 84, 32, 0.25);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(233, 84, 32, 0.2);
+            border-color: var(--terminal-ubuntu-light);
+        }
+
+        .badge:hover::before {
+            left: 100%;
+        }
+
+        /* =================================
+           PROJECT CARDS
+           UPDATE: Modify project content in JavaScript section (lines ~505-550)
+           ================================= */
+        .project-card {
+            border: 1px solid var(--terminal-gray);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: rgba(60, 36, 20, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+        }
+
+        /* Top border slide effect */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--terminal-ubuntu), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--terminal-ubuntu);
+            background: rgba(60, 36, 20, 0.5);
+            transform: translateY(-4px) translateX(8px);
+            box-shadow: 
+                -8px 8px 16px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(233, 84, 32, 0.1);
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--terminal-ubuntu-light);
+            transition: color 0.3s ease;
+        }
+
+        /* Project card content */
+        .project-title {
+            color: var(--terminal-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--terminal-light-gray);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Technology stack tags */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(78, 154, 6, 0.15);
+            color: var(--terminal-green);
+            border: 1px solid var(--terminal-green);
+            padding: 0.2rem 0.5rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .tech-tag:hover {
+            background: rgba(78, 154, 6, 0.25);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(78, 154, 6, 0.2);
+        }
+
+        /* Project links */
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--terminal-ubuntu);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Animated underline effect */
+        .project-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -1px;
+            left: 50%;
+            background: var(--terminal-ubuntu-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .project-link:hover {
+            color: var(--terminal-ubuntu-light);
+            transform: translateY(-1px);
+            text-shadow: 0 0 8px rgba(233, 84, 32, 0.4);
+        }
+
+        .project-link:hover::after {
+            width: 100%;
+        }
+
+        /* =================================
+           CONTACT SECTION
+           UPDATE: Modify contact links in JavaScript section (lines ~570-585)
+           ================================= */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--terminal-light-gray);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Left accent bar effect */
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            width: 2px;
+            height: 0;
+            background: var(--terminal-ubuntu);
+            transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-50%);
+        }
+
+        .contact-item:hover {
+            color: var(--terminal-ubuntu-light);
+            transform: translateX(8px);
+            text-shadow: 0 0 6px rgba(233, 84, 32, 0.3);
+        }
+
+        .contact-item:hover::before {
+            height: 100%;
+        }
+
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* =================================
+           RESPONSIVE DESIGN
+           ================================= */
+        @media (max-width: 768px) {
+            .terminal-container {
+                padding: 1rem;
+            }
+            
+            .terminal-content {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* =================================
+           LOADING ANIMATION
+           ================================= */
+        .loading {
+            opacity: 0;
+            animation: typewriter 0.1s steps(1) forwards;
+        }
+
+        @keyframes typewriter {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="btn btn-close"></div>
+                    <div class="btn btn-minimize"></div>
+                    <div class="btn btn-maximize"></div>
+                </div>
+                <!-- UPDATE: Change terminal title if desired -->
+                <div class="terminal-title">user@portfolio: ~</div>
+            </div>
+            
+            <!-- All content gets dynamically loaded here by JavaScript -->
+            <div class="terminal-content" id="terminal-content">
+                <!-- Content will be loaded here via typing animation -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===============================================
+           TERMINAL ANIMATION CONFIGURATION
+           UPDATE THIS SECTION TO MODIFY YOUR CONTENT
+           =============================================== */
+        
+        const terminalContent = document.getElementById('terminal-content');
+        
+        // Terminal commands and responses sequence
+        const terminalSequence = [
+            {
+                type: 'command',
+                text: 'cat README.md',
+                delay: 800,        // Delay before typing starts (ms)
+                typeSpeed: 80      // Speed between characters (ms)
+            },
+            {
+                type: 'output',
+                content: '<h1>Hello, I\'m [Your Name]</h1>', // UPDATE: Replace with your actual name
+                delay: 400
+            },
+            {
+                type: 'newline',
+                delay: 600
+            },
+            {
+                type: 'command',
+                text: 'whoami',
+                delay: 400,
+                typeSpeed: 100
+            },
+            {
+                type: 'output',
+                // UPDATE: Replace this entire content block with your information
+                content: `Full-stack developer passionate about building innovative solutions.<br>
+                         Currently focused on modern web technologies and cloud infrastructure.<br><br>
+                         
+                         <strong style="color: var(--terminal-ubuntu-light)">Current Focus:</strong> [Your current focus/role]<br>
+                         <strong style="color: var(--terminal-ubuntu-light)">Location:</strong> [Your location]<br>
+                         <strong style="color: var(--terminal-ubuntu-light)">Status:</strong> Open for opportunities<br><br>
+                         
+                         <strong style="color: var(--terminal-ubuntu-light)">Skills:</strong><br>
+                         
+                         <!-- UPDATE: Add/remove/modify these skill badges -->
+                         <div class="badge">JavaScript</div>
+                         <div class="badge">TypeScript</div>
+                         <div class="badge">React</div>
+                         <div class="badge">Node.js</div>
+                         <div class="badge">Python</div>
+                         <div class="badge">Docker</div>
+                         <div class="badge">AWS</div>
+                         <div class="badge">Kubernetes</div>
+                         <div class="badge">MongoDB</div>
+                         <div class="badge">PostgreSQL</div>`,
+                delay: 600
+            },
+            {
+                type: 'newline',
+                delay: 800
+            },
+            {
+                type: 'section-header',
+                content: '<h2>Projects</h2>',
+                delay: 200
+            },
+            {
+                type: 'command',
+                text: 'cd projects/ && ls -la',
+                delay: 600,
+                typeSpeed: 70
+            },
+            {
+                type: 'output',
+                // UPDATE: Replace these project cards with your actual projects
+                content: `<div class="project-card">
+                            <div class="project-title">Project One</div> <!-- UPDATE: Project title -->
+                            <div class="project-description">
+                                Brief description of your amazing project. What problem does it solve? What makes it special?
+                                <!-- UPDATE: Project description -->
+                            </div>
+                            <div class="tech-stack">
+                                <!-- UPDATE: Technology tags for this project -->
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                            <div class="project-links">
+                                <!-- UPDATE: Replace # with actual URLs -->
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">Source Code</a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-title">Project Two</div> <!-- UPDATE: Project title -->
+                            <div class="project-description">
+                                Another awesome project description. Highlight the key features and your role in development.
+                                <!-- UPDATE: Project description -->
+                            </div>
+                            <div class="tech-stack">
+                                <!-- UPDATE: Technology tags for this project -->
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">FastAPI</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
+                            <div class="project-links">
+                                <!-- UPDATE: Replace # with actual URLs -->
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">Source Code</a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-title">Project Three</div> <!-- UPDATE: Project title -->
+                            <div class="project-description">
+                                Third project showcase. Focus on the impact and technical challenges you overcame.
+                                <!-- UPDATE: Project description -->
+                            </div>
+                            <div class="tech-stack">
+                                <!-- UPDATE: Technology tags for this project -->
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Express</span>
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                            <div class="project-links">
+                                <!-- UPDATE: Replace # with actual URLs -->
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">Source Code</a>
+                            </div>
+                        </div>`,
+                delay: 800
+            },
+            {
+                type: 'newline',
+                delay: 800
+            },
+            {
+                type: 'section-header',
+                content: '<h2>Contact</h2>',
+                delay: 200
+            },
+            {
+                type: 'command',
+                text: 'contact --list',
+                delay: 500,
+                typeSpeed: 90
+            },
+            {
+                type: 'output',
+                // UPDATE: Replace with your actual contact information
+                content: `<div class="contact-info">
+                            <div class="contact-item">
+                                <a href="mailto:your.email@example.com">your.email@example.com</a> <!-- UPDATE: Your email -->
+                            </div>
+                            <div class="contact-item">
+                                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> <!-- UPDATE: Your LinkedIn -->
+                            </div>
+                            <div class="contact-item">
+                                <a href="https://github.com/yourusername" target="_blank">GitHub</a> <!-- UPDATE: Your GitHub -->
+                            </div>
+                            <div class="contact-item">
+                                <a href="https://twitter.com/yourusername" target="_blank">Twitter</a> <!-- UPDATE: Your Twitter or remove -->
+                            </div>
+                        </div>`,
+                delay: 500
+            },
+            {
+                type: 'final-prompt',
+                delay: 1000
+            }
+        ];
+
+        /* ===============================================
+           ANIMATION FUNCTIONS - DON'T MODIFY BELOW
+           (Unless you want to change animation behavior)
+           =============================================== */
+
+        // Typing function - simulates character-by-character typing
+        function typeText(element, text, speed = 50) {
+            return new Promise((resolve) => {
+                let i = 0;
+                element.innerHTML = '';
+                
+                function type() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        // Create command prompt element (user@portfolio:~$)
+        function createPrompt() {
+            const promptElement = document.createElement('div');
+            promptElement.style.display = 'flex';
+            promptElement.style.alignItems = 'center';
+            
+            const promptText = document.createElement('span');
+            promptText.className = 'prompt';
+            promptText.textContent = 'user@portfolio:~$ ';
+            
+            const commandText = document.createElement('span');
+            commandText.className = 'command';
+            commandText.style.marginLeft = '0';
+            
+            promptElement.appendChild(promptText);
+            promptElement.appendChild(commandText);
+            
+            return { promptElement, commandText };
+        }
+
+        // Add blinking cursor
+        function addCursor(element) {
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            cursor.textContent = '█';
+            cursor.style.marginLeft = '2px';
+            element.appendChild(cursor);
+            return cursor;
+        }
+
+        // Remove cursor
+        function removeCursor(cursor) {
+            if (cursor && cursor.parentNode) {
+                cursor.parentNode.removeChild(cursor);
+            }
+        }
+
+        // Main terminal animation sequence
+        async function runTerminalSequence() {
+            for (let item of terminalSequence) {
+                await new Promise(resolve => setTimeout(resolve, item.delay));
+                
+                if (item.type === 'command') {
+                    const { promptElement, commandText } = createPrompt();
+                    terminalContent.appendChild(promptElement);
+                    
+                    const cursor = addCursor(commandText);
+                    await typeText(commandText, item.text, item.typeSpeed || 80);
+                    removeCursor(cursor);
+                    
+                } else if (item.type === 'output') {
+                    const outputElement = document.createElement('div');
+                    outputElement.className = 'output';
+                    outputElement.style.opacity = '0';
+                    outputElement.innerHTML = item.content;
+                    terminalContent.appendChild(outputElement);
+                    
+                    // Fade in effect
+                    setTimeout(() => {
+                        outputElement.style.transition = 'opacity 0.5s ease';
+                        outputElement.style.opacity = '1';
+                    }, 100);
+                    
+                } else if (item.type === 'section-header') {
+                    const headerElement = document.createElement('div');
+                    headerElement.className = 'section';
+                    headerElement.style.opacity = '0';
+                    headerElement.innerHTML = item.content;
+                    terminalContent.appendChild(headerElement);
+                    
+                    setTimeout(() => {
+                        headerElement.style.transition = 'opacity 0.3s ease';
+                        headerElement.style.opacity = '1';
+                    }, 100);
+                    
+                } else if (item.type === 'newline') {
+                    const br = document.createElement('br');
+                    terminalContent.appendChild(br);
+                    
+                } else if (item.type === 'final-prompt') {
+                    const { promptElement, commandText } = createPrompt();
+                    terminalContent.appendChild(promptElement);
+                    addCursor(commandText);
+                }
+            }
+        }
+
+        // Start the terminal sequence when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Small delay before starting animation
+            setTimeout(() => {
+                runTerminalSequence();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
