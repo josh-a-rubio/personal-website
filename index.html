@@ -3,37 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- UPDATE: Change page title and add your name -->
+    
     <title>Josh Rubio - Portfolio</title>
     
-    <!-- Google Fonts - JetBrains Mono for authentic terminal look -->
+    <!-- Google Fonts - JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* =================================
-           COLOR VARIABLES - Ubuntu Theme
-           ================================= */
+        /* COLOR VARIABLES */
         :root {
-            /* Ubuntu color scheme - modify these to change the entire theme */
-            --terminal-bg: #300a24;           /* Dark purple - main terminal background */
-            --terminal-ubuntu: #e95420;       /* Ubuntu orange - main accent color */
-            --terminal-ubuntu-dark: #5e2750;  /* Dark maroon - page background */
-            --terminal-ubuntu-light: #f47068; /* Light orange - highlights */
-            --terminal-brown: #3c2414;        /* Brown accent */
+            /* ubuntu color scheme */
+            --terminal-bg: #300a24;           /* dark purple - main terminal background */
+            --terminal-ubuntu: #e95420;       /* ubuntu orange - main accent color */
+            --terminal-ubuntu-dark: #5e2750;  /* dark maroon - page background */
+            --terminal-ubuntu-light: #f47068; /* light orange - highlights */
+            --terminal-brown: #3c2414;        /* brown accent */
             --terminal-gray: #4a4a4a;         /* UI borders */
-            --terminal-light-gray: #a8a8a8;  /* Secondary text */
-            --terminal-white: #ffffff;        /* Primary text */
-            --terminal-green: #4e9a06;        /* Success/tech tags */
-            --terminal-yellow: #edd400;       /* Warning/minimize button */
-            --terminal-red: #cc0000;          /* Error/close button */
-            --cursor-blink: 1s;               /* Cursor blink speed */
+            --terminal-light-gray: #a8a8a8;  /* secondary text */
+            --terminal-white: #ffffff;        /* primary text */
+            --terminal-green: #4e9a06;        /* success/tech tags */
+            --terminal-yellow: #edd400;       /* warning/minimize button */
+            --terminal-red: #cc0000;          /* error/close button */
+            --cursor-blink: 1s;               /* cursor blink speed */
         }
 
-        /* =================================
-           GLOBAL STYLES
-           ================================= */
+        /* GLOBAL STYLES */
         * {
             margin: 0;
             padding: 0;
@@ -42,7 +38,7 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background: var(--terminal-ubuntu-dark); /* Page background color */
+            background: var(--terminal-ubuntu-dark); /* page background color */
             color: var(--terminal-white);
             overflow-x: hidden;
             position: relative;
@@ -51,11 +47,9 @@
             line-height: 1.5;
         }
 
-        /* =================================
-           TERMINAL WINDOW STRUCTURE
-           ================================= */
+        /* TERMINAL WINDOW STRUCTURE */
         .terminal-container {
-            max-width: 1200px; /* Adjust for wider/narrower layout */
+            max-width: 1200px; /* adjust for wider/narrower layout */
             margin: 0 auto;
             padding: 2rem;
             position: relative;
@@ -66,11 +60,11 @@
             border: 1px solid var(--terminal-gray);
             border-radius: 4px;
             overflow: hidden;
-            background: var(--terminal-bg); /* Terminal window background */
+            background: var(--terminal-bg); /* terminal window background */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Terminal header with close/minimize/maximize buttons */
+        /* terminal header with close/minimize/maximize buttons */
         .terminal-header {
             background: var(--terminal-gray);
             padding: 0.5rem 1rem;
@@ -85,7 +79,7 @@
             gap: 0.4rem;
         }
 
-        /* Window control buttons (close, minimize, maximize) */
+        /* window control buttons (close, minimize, maximize) */
         .btn {
             width: 10px;
             height: 10px;
@@ -124,7 +118,7 @@
             box-shadow: 0 0 6px rgba(78, 154, 6, 0.4);
         }
 
-        /* Terminal title bar text */
+        /* terminal title bar text */
         .terminal-title {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 400;
@@ -133,21 +127,19 @@
             margin-left: 1rem;
         }
 
-        /* =================================
-           TERMINAL CONTENT AREA
-           ================================= */
+        /* TERMINAL CONTENT AREA */
         .terminal-content {
             padding: 2rem;
             line-height: 1.6;
         }
 
-        /* Command prompt styling (user@portfolio:~$) */
+        /* command prompt styling (user@portfolio:~$) */
         .prompt {
             color: var(--terminal-ubuntu);
             font-weight: 400;
         }
 
-        /* Blinking cursor */
+        /* blinking cursor */
         .cursor {
             background: var(--terminal-white);
             animation: blink var(--cursor-blink) infinite, pulse 2s infinite;
@@ -163,10 +155,8 @@
             50% { transform: scale(1.1); }
         }
 
-        /* =================================
-           TYPOGRAPHY
-           ================================= */
-        /* Main heading - your name */
+        /* TYPOGRAPHY */
+        /* main heading */
         h1 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 2rem;
@@ -175,7 +165,7 @@
             margin: 1rem 0 2rem 0;
         }
 
-        /* Section headers (Projects, Contact) */
+        /* section headers (Projects, Contact) */
         h2 {
             color: var(--terminal-ubuntu-light);
             font-size: 1.3rem;
@@ -185,9 +175,7 @@
             padding-left: 0.75rem;
         }
 
-        /* =================================
-           ANIMATION CLASSES
-           ================================= */
+        /* ANIMATION CLASSES */
         .section {
             margin: 2rem 0;
             opacity: 0;
@@ -210,22 +198,19 @@
             }
         }
 
-        /* Command text styling */
+        /* command text styling */
         .command {
             color: var(--terminal-ubuntu-light);
             font-weight: 400;
         }
 
-        /* Command output indentation */
+        /* command output indentation */
         .output {
             margin: 1rem 0;
             padding-left: 2rem;
         }
 
-        /* =================================
-           SKILLS BADGES
-           UPDATE: Add/remove/modify skills in the JavaScript section (lines ~470-485)
-           ================================= */
+        /* SKILLS BADGES */
         .badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -241,7 +226,7 @@
             overflow: hidden;
         }
 
-        /* Sliding highlight effect on hover */
+        /* sliding highlight effect on hover */
         .badge::before {
             content: '';
             position: absolute;
@@ -264,10 +249,7 @@
             left: 100%;
         }
 
-        /* =================================
-           PROJECT CARDS
-           UPDATE: Modify project content in JavaScript section (lines ~505-550)
-           ================================= */
+        /* PROJECT CARDS */
         .project-card {
             border: 1px solid var(--terminal-gray);
             border-radius: 4px;
@@ -280,7 +262,7 @@
             overflow: hidden;
         }
 
-        /* Top border slide effect */
+        /* top border slide effect */
         .project-card::before {
             content: '';
             position: absolute;
@@ -310,7 +292,7 @@
             transition: color 0.3s ease;
         }
 
-        /* Project card content */
+        /* project card content */
         .project-title {
             color: var(--terminal-white);
             font-size: 1.1rem;
@@ -324,7 +306,7 @@
             line-height: 1.4;
         }
 
-        /* Technology stack tags */
+        /* technology stack tags */
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
@@ -349,7 +331,7 @@
             box-shadow: 0 2px 4px rgba(78, 154, 6, 0.2);
         }
 
-        /* Project links */
+        /* project links */
         .project-links {
             display: flex;
             gap: 1rem;
@@ -365,7 +347,7 @@
             display: inline-block;
         }
 
-        /* Animated underline effect */
+        /* animated underline effect */
         .project-link::after {
             content: '';
             position: absolute;
@@ -388,10 +370,7 @@
             width: 100%;
         }
 
-        /* =================================
-           CONTACT SECTION
-           UPDATE: Modify contact links in JavaScript section (lines ~570-585)
-           ================================= */
+        /* CONTACT SECTION */
         .contact-info {
             display: flex;
             flex-wrap: wrap;
@@ -409,7 +388,7 @@
             cursor: pointer;
         }
 
-        /* Left accent bar effect */
+        /* left accent bar effect */
         .contact-item::before {
             content: '';
             position: absolute;
@@ -438,9 +417,7 @@
             transition: all 0.3s ease;
         }
 
-        /* =================================
-           RESPONSIVE DESIGN
-           ================================= */
+        /* RESPONSIVE DESIGN */
         @media (max-width: 768px) {
             .terminal-container {
                 padding: 1rem;
@@ -460,9 +437,7 @@
             }
         }
 
-        /* =================================
-           LOADING ANIMATION
-           ================================= */
+        /* LOADING ANIMATION */
         .loading {
             opacity: 0;
             animation: typewriter 0.1s steps(1) forwards;
@@ -482,36 +457,33 @@
                     <div class="btn btn-minimize"></div>
                     <div class="btn btn-maximize"></div>
                 </div>
-                <!-- UPDATE: Change terminal title if desired -->
+                <!-- terminal title -->
                 <div class="terminal-title">user@portfolio: ~</div>
             </div>
             
-            <!-- All content gets dynamically loaded here by JavaScript -->
+            <!-- dynamically loaded content -->
             <div class="terminal-content" id="terminal-content">
-                <!-- Content will be loaded here via typing animation -->
+                <!-- content will be loaded here via typing animation -->
             </div>
         </div>
     </div>
 
     <script>
-        /* ===============================================
-           TERMINAL ANIMATION CONFIGURATION
-           UPDATE THIS SECTION TO MODIFY YOUR CONTENT
-           =============================================== */
+        /* TERMINAL ANIMATION CONFIGURATION - CONTENT */
         
         const terminalContent = document.getElementById('terminal-content');
         
-        // Terminal commands and responses sequence
+        // terminal commands and responses sequence
         const terminalSequence = [
             {
                 type: 'command',
                 text: 'cat README.md',
-                delay: 800,        // Delay before typing starts (ms)
-                typeSpeed: 80      // Speed between characters (ms)
+                delay: 800,        // delay before typing starts (ms)
+                typeSpeed: 80      // speed between characters (ms)
             },
             {
                 type: 'output',
-                content: '<h1>Hello, I\'m Josh Rubio</h1>', // UPDATE: Replace with your actual name
+                content: '<h1>Hello, I\'m Josh Rubio</h1>',
                 delay: 400
             },
             {
@@ -526,7 +498,7 @@
             },
             {
                 type: 'output',
-                // UPDATE: Replace this entire content block with your information
+                // information
                 content: `Systems Administration student specializing in Linux, networking, and cloud infrastructure.<br>
                          Passionate about building reliable, secure, and scalable infrastructure.<br><br>
                          
@@ -566,7 +538,7 @@
             },
             {
                 type: 'output',
-                // UPDATE: Replace these project cards with your actual projects
+                // projects
                 content: `<div class="project-card">
                             <div class="project-title">Multi-Region EC2 Deployment</div> <!-- UPDATE: Project title -->
                             <div class="project-description">
@@ -641,7 +613,7 @@
             },
             {
                 type: 'output',
-                // UPDATE: Replace with your actual contact information
+                // contact information
                 content: `<div class="contact-info">
                             <div class="contact-item">
                                 <a href="mailto:rubiojosha@gmail.com">rubiojosha@gmail.com</a> <!-- UPDATE: Your email -->
@@ -664,12 +636,9 @@
             }
         ];
 
-        /* ===============================================
-           ANIMATION FUNCTIONS - DON'T MODIFY BELOW
-           (Unless you want to change animation behavior)
-           =============================================== */
+        /* ANIMATION FUNCTIONS */
 
-        // Typing function - simulates character-by-character typing
+        // typing function - simulates character-by-character typing
         function typeText(element, text, speed = 50) {
             return new Promise((resolve) => {
                 let i = 0;
@@ -688,7 +657,7 @@
             });
         }
 
-        // Create command prompt element (user@portfolio:~$)
+        // command prompt element (user@portfolio:~$)
         function createPrompt() {
             const promptElement = document.createElement('div');
             promptElement.style.display = 'flex';
@@ -708,7 +677,7 @@
             return { promptElement, commandText };
         }
 
-        // Add blinking cursor
+        // blinking cursor
         function addCursor(element) {
             const cursor = document.createElement('span');
             cursor.className = 'cursor';
@@ -718,14 +687,14 @@
             return cursor;
         }
 
-        // Remove cursor
+        // remove cursor
         function removeCursor(cursor) {
             if (cursor && cursor.parentNode) {
                 cursor.parentNode.removeChild(cursor);
             }
         }
 
-        // Main terminal animation sequence
+        // main terminal animation sequence
         async function runTerminalSequence() {
             for (let item of terminalSequence) {
                 await new Promise(resolve => setTimeout(resolve, item.delay));
@@ -745,7 +714,7 @@
                     outputElement.innerHTML = item.content;
                     terminalContent.appendChild(outputElement);
                     
-                    // Fade in effect
+                    // fade in effect
                     setTimeout(() => {
                         outputElement.style.transition = 'opacity 0.5s ease';
                         outputElement.style.opacity = '1';
@@ -775,9 +744,9 @@
             }
         }
 
-        // Start the terminal sequence when page loads
+        // start the terminal sequence when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            // Small delay before starting animation
+            // delay before starting animation
             setTimeout(() => {
                 runTerminalSequence();
             }, 500);
